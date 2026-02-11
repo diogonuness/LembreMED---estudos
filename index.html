@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Projeto LembreMED</title>
+</head>
+
+<body>
+
+<header>
+    <h1>LembreMED</h1>
+    <p>Sistema para ajudar a não esquecer os remédios.</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#painel">Início</a></li>
+        <li><a href="#cadastro-paciente">Cadastrar Paciente</a></li>
+        <li><a href="#cadastro-remedio">Cadastrar Remédio</a></li>
+        <li><a href="#historico">Histórico</a></li>
+    </ul>
+</nav>
+
+<main>
+
+    <section id="painel">
+        <h2>Painel de hoje</h2>
+        <ul>
+            <li>Doses Tomadas: 10</li>
+            <li>Doses Atrasadas: 2</li>
+        </ul>
+    </section>
+
+    <section id="cadastro-paciente">
+        <h2>Cadastro do Paciente</h2>
+        <form>
+            <label>Nome:</label>
+            <input type="text" name="nome">
+            <br><br>
+
+            <label>E-mail:</label>
+            <input type="email" name="email">
+            <br><br>
+
+            <label>Telefone:</label>
+            <input type="tel" name="telefone">
+            <br><br>
+
+            <button type="submit">Salvar Paciente</button>
+        </form>
+    </section>
+
+    <section id="cadastro-remedio">
+        <h2>Novo Medicamento</h2>
+        <form>
+            <label>Nome do Remédio:</label>
+            <input type="text" name="remedio">
+            <br><br>
+
+            <label>Dose (mg):</label>
+            <input type="number" name="dose">
+            <br><br>
+
+            <fieldset>
+                <legend>Como tomar:</legend>
+                <input type="radio" name="tipo" value="comprimido"> Comprimido
+                <input type="radio" name="tipo" value="gotas"> Gotas
+            </fieldset>
+            <br>
+
+            <label>Horário:</label>
+            <input type="time" name="hora">
+            <br><br>
+
+            <button type="submit">Confirmar Cadastro</button>
+        </form>
+    </section>
+
+    <section id="busca">
+        <h2>Procurar Remédio</h2>
+        <form>
+            <input type="text" name="buscar" placeholder="Digite o nome...">
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+
+    <section id="historico">
+        <h2>Histórico de Doses</h2>
+        <ul>
+            <li><strong>08:00</strong> - Metformina - Tomado</li>
+            <li><strong>12:00</strong> - Insulina - Atrasado</li>
+            <li><strong>20:00</strong> - Dipirona - Agendado</li>
+        </ul>
+    </section>
+
+</main>
+
+<footer>
+    <p>Desenvolvido para o projeto LembreMED - 2026</p>
+</footer>
+
+</body>
+</html>
