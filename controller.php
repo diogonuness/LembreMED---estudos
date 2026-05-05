@@ -12,6 +12,13 @@ class MatriculaController {
     }
 
     /**
+     * Exibe o formulário de matrícula.
+     */
+    public function exibirFormulario(): void {
+        include 'view.php';
+    }
+
+    /**
      * Orquestra o processo de matrícula com feedback visual melhorado.
      */
     public function processarMatricula(array $dados): void {

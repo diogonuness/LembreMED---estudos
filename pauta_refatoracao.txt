@@ -1,0 +1,21 @@
+### Dificuldades e Dúvidas na Transição da Arquitetura
+
+1. **Injeção de Dependências no Router:**
+   - Atualmente, todas as dependências são instanciadas manualmente no `index.php`.
+   - Dúvida: Como escalar essa injeção de dependências sem tornar o `index.php` muito poluído? Seria ideal usar um Container de Injeção de Dependências (DIC)?
+
+2. **Tratamento de Exceções (Try-Catch):**
+   - Temos blocos try-catch no `Router`, no `MatriculaController` e nos `Repositories`.
+   - Dúvida: Qual o lugar ideal para capturar exceções de negócio vs. exceções de infraestrutura (banco de dados)? Estamos sobrecarregando o Controller com lógica de renderização de erro que deveria estar em outro lugar?
+
+3. **Validação: Middleware vs. Service:**
+   - O `Middleware` faz validações básicas de campos vazios e tipos, enquanto o `MatriculaService` lida com regras de negócio (idade mínima).
+   - Dúvida: Onde deve terminar a responsabilidade do Middleware e começar a do Service? Se o Middleware já validou os campos, o Service ainda precisa verificar se os dados existem?
+
+4. **Acoplamento na View:**
+   - O `Router` faz um `include 'view.php'` diretamente para requisições GET.
+   - Dúvida: Isso não fere o princípio de que o Controller deve orquestrar a visualização? O Router não deveria apenas delegar para o Controller, e este decidir qual view carregar?
+
+5. **Interface de Contratos:**
+   - Criamos `Contracts` para repositórios e serviços.
+   - Dúvida: Estamos seguindo corretamente o Princípio de Inversão de Dependência (DIP) ao tipar os construtores com interfaces?

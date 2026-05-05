@@ -22,8 +22,8 @@ class Router {
         try {
             // Roteamento simples baseado no método
             if ($method === 'GET') {
-                // Exibe o formulário
-                include 'view.php';
+                // Delega para o Controller exibir o formulário
+                $this->controller->exibirFormulario();
             } elseif ($method === 'POST') {
                 // 1. Passa pelo Middleware de Segurança/Validação
                 $this->middleware->validar($_POST);
