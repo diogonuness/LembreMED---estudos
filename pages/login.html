@@ -4,14 +4,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - LembreMED</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Importação da fonte Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Ícones Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --primary-color: #10b981; /* Verde LembreMED */
+            --primary-hover: #059669;
+            --bg-color: #f4f7f6;      /* Cinza claro neutro */
+            --text-main: #1e293b;
+            --text-muted: #666666;
+            --white: #ffffff;
+            --border-color: #dddddd;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --radius-card: 12px;
+            --radius-input: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 2. O Card de Login */
+        .login-card {
+            background-color: var(--white);
+            max-width: 420px;
+            width: 100%;
+            padding: 40px;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 3. Tipografia e Cabeçalho */
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 54px;
+            height: 54px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .login-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .login-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* 4. Campos de Formulário */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-input);
+            transition: all 0.3s ease;
+            color: var(--text-main);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #bbb;
+        }
+
+        /* 5. Botões e Links */
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-input);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .login-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-footer a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        /* Error Modal Style */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .modal {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-<body class="auth-page">
-    <div class="auth-card animate-fade">
-        <div class="auth-header">
+<body>
+
+    <div class="login-card">
+        <div class="login-header">
+            <div class="brand-icon">
+                <i data-lucide="heart-pulse"></i>
+            </div>
             <h1>LembreMED</h1>
-            <p>Seu assistente pessoal de saúde.</p>
+            <p>Seu assistente pessoal de saúde</p>
         </div>
 
         <form id="loginForm">
@@ -25,32 +213,36 @@
                 <input type="password" id="password" class="form-control" placeholder="Sua senha segura" required>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-large" style="margin-top: 1rem;">Entrar na Conta</button>
+            <button type="submit" class="btn-login">Entrar na Conta</button>
         </form>
 
-        <div class="auth-footer" style="text-align: center; margin-top: 2rem;">
-            <p>Ainda não tem uma conta? <a href="cadastro.html" style="color: var(--primary); font-weight: 700; text-decoration: none;">Cadastre-se agora</a></p>
+        <div class="login-footer">
+            <p>Ainda não tem uma conta? <a href="cadastro.html">Cadastre-se agora</a></p>
         </div>
     </div>
 
     <!-- Error Modal -->
     <div id="errorModal" class="modal-overlay">
-        <div class="alert-card error">
-            <span class="alert-card-icon">❌</span>
-            <h3 class="alert-card-title">Acesso Negado</h3>
-            <p class="alert-card-message">E-mail não encontrado ou senha incorreta. Por favor, verifique seus dados.</p>
-            <button class="btn btn-primary" style="width: 100%;" onclick="closeErrorModal()">Tentar Novamente</button>
+        <div class="modal">
+            <div style="width: 64px; height: 64px; background: #fee2e2; color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <i data-lucide="x-circle"></i>
+            </div>
+            <h3 style="margin-bottom: 8px;">Acesso Negado</h3>
+            <p style="color: #666; margin-bottom: 24px;">E-mail não encontrado ou senha incorreta.</p>
+            <button class="btn-login" style="margin-top: 0;" onclick="closeErrorModal()">Tentar Novamente</button>
         </div>
     </div>
 
     <script>
+        // Inicializa os ícones Lucide
+        lucide.createIcons();
+
         function closeErrorModal() {
             document.getElementById('errorModal').style.display = 'none';
         }
 
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            
             const email = document.getElementById('email').value;
             const savedUser = JSON.parse(localStorage.getItem('lembremed_user'));
             
@@ -59,6 +251,7 @@
                 window.location.href = '../index.html';
             } else {
                 document.getElementById('errorModal').style.display = 'flex';
+                lucide.createIcons();
             }
         });
     </script>

@@ -4,24 +4,234 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Conta - LembreMED</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Importação da fonte Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Ícones Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --primary-color: #10b981; /* Verde LembreMED */
+            --primary-hover: #059669;
+            --bg-color: #f4f7f6;      /* Cinza claro neutro */
+            --text-main: #1e293b;
+            --text-muted: #666666;
+            --white: #ffffff;
+            --border-color: #dddddd;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --radius-card: 12px;
+            --radius-input: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* O Card de Cadastro */
+        .auth-card {
+            background-color: var(--white);
+            max-width: 550px;
+            width: 100%;
+            padding: 40px;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tipografia e Cabeçalho */
+        .auth-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 54px;
+            height: 54px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .auth-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .auth-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Campos de Formulário */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-input);
+            transition: all 0.3s ease;
+            color: var(--text-main);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        /* Role Selection */
+        .role-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .role-box {
+            border: 2px solid var(--border-color);
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .role-box:hover {
+            border-color: var(--primary-color);
+            background-color: var(--primary-light);
+        }
+
+        .role-box input {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        .role-box strong {
+            display: block;
+            font-size: 16px;
+            color: var(--text-main);
+        }
+
+        .role-box small {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .role-box.selected {
+            border-color: var(--primary-color);
+            background-color: #f0fdf4;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        /* Botões e Links */
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-input);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-auth:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body class="auth-page">
-    <div class="auth-card animate-fade" style="max-width: 550px;">
+<body>
+
+    <div class="auth-card">
         <div class="auth-header">
+            <div class="brand-icon">
+                <i data-lucide="user-plus"></i>
+            </div>
             <h1>Começar Agora</h1>
-            <p>Sua saúde organizada em um só lugar.</p>
+            <p>Sua saúde organizada em um só lugar</p>
         </div>
 
         <form id="signupForm">
             <div class="form-group">
-                <label for="nome">Seu Nome Completo</label>
+                <label for="nome">Nome Completo</label>
                 <input type="text" id="nome" class="form-control" placeholder="Como você quer ser chamado?" required>
             </div>
 
             <div class="form-group">
-                <label for="email">Seu Melhor E-mail</label>
+                <label for="email">E-mail</label>
                 <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
             </div>
 
@@ -33,32 +243,50 @@
             <div class="form-group">
                 <label>Você usará o sistema como:</label>
                 <div class="role-group">
-                    <label class="role-box">
-                        <input type="radio" name="role" value="paciente" checked>
+                    <label class="role-box" id="label-paciente">
+                        <input type="radio" name="role" value="paciente" checked onchange="updateRoleUI()">
                         <span>
-                            <strong style="display: block; font-size: 1.1rem; margin-bottom: 4px;">Paciente</strong>
-                            <small style="font-weight: 500; opacity: 0.8; line-height: 1.2; display: block;">Vou gerenciar minha própria rotina de saúde</small>
+                            <strong>Paciente</strong>
+                            <small>Vou gerenciar minha própria rotina</small>
                         </span>
                     </label>
-                    <label class="role-box">
-                        <input type="radio" name="role" value="cuidador">
+                    <label class="role-box" id="label-cuidador">
+                        <input type="radio" name="role" value="cuidador" onchange="updateRoleUI()">
                         <span>
-                            <strong style="display: block; font-size: 1.1rem; margin-bottom: 4px;">Cuidador</strong>
-                            <small style="font-weight: 500; opacity: 0.8; line-height: 1.2; display: block;">Vou ajudar e monitorar outra pessoa</small>
+                            <strong>Cuidador</strong>
+                            <small>Vou ajudar outra pessoa</small>
                         </span>
                     </label>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-large" style="margin-top: 1rem;">Criar Minha Conta</button>
+            <button type="submit" class="btn-auth">Criar Minha Conta</button>
         </form>
 
-        <div class="auth-footer" style="text-align: center; margin-top: 2rem;">
-            <p>Já possui acesso? <a href="login.html" style="color: var(--primary); font-weight: 700; text-decoration: none;">Faça login aqui</a></p>
+        <div class="auth-footer">
+            <p>Já possui acesso? <a href="login.html">Faça login aqui</a></p>
         </div>
     </div>
 
     <script>
+        // Inicializa os ícones Lucide
+        lucide.createIcons();
+
+        function updateRoleUI() {
+            const boxes = document.querySelectorAll('.role-box');
+            boxes.forEach(box => {
+                const radio = box.querySelector('input');
+                if (radio.checked) {
+                    box.classList.add('selected');
+                } else {
+                    box.classList.remove('selected');
+                }
+            });
+        }
+
+        // Chamada inicial para marcar o padrão
+        updateRoleUI();
+
         document.getElementById('signupForm').addEventListener('submit', (e) => {
             e.preventDefault();
             

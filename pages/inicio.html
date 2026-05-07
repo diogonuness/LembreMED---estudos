@@ -13,20 +13,23 @@
     <div class="app-layout">
         <!-- Fixed Sidebar -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header" style="justify-content: center; padding: 2rem 0;">
-                <div class="menu-icon-wrapper" style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; color: var(--primary);">
-                    <i data-lucide="menu"></i>
-                </div>
+            <div class="sidebar-header">
+                <a href="inicio.html" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">
+                        <i data-lucide="heart-pulse"></i>
+                    </div>
+                    <span>LembreMED</span>
+                </a>
             </div>
             
             <nav class="sidebar-nav">
                 <a href="inicio.html" class="sidebar-item active">
                     <i data-lucide="layout-dashboard"></i>
-                    <span>Dashboard</span>
+                    <span>Início</span>
                 </a>
                 <a href="medicamentos.html" class="sidebar-item">
-                    <i data-lucide="calendar-check"></i>
-                    <span>Meus Remédios</span>
+                    <i data-lucide="pill"></i>
+                    <span>Medicamentos</span>
                 </a>
                 <a href="pacientes.html" class="sidebar-item">
                     <i data-lucide="users"></i>
@@ -43,7 +46,7 @@
             </nav>
 
             <div class="sidebar-footer">
-                <button onclick="logout()" class="btn btn-outline" style="width: 100%; justify-content: flex-start; border: none; padding: 1rem 1.5rem; background: transparent;">
+                <button onclick="logout()" class="sidebar-item" style="color: var(--text-danger);">
                     <i data-lucide="log-out"></i>
                     <span>Sair</span>
                 </button>
@@ -58,19 +61,19 @@
                 </button>
                 <div class="user-info" style="display: flex; align-items: center; gap: 1rem;">
                     <div style="text-align: right;">
-                        <span id="userNameDisplay" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-main);">Carregando...</span>
-                        <span style="font-size: 0.75rem; color: var(--text-sub); font-weight: 600;">Cuidador Principal</span>
+                        <span id="userNameDisplay" style="display: block; font-weight: 700; color: var(--text-main);">Carregando...</span>
+                        <span style="font-size: 0.8rem; color: var(--text-sub); font-weight: 600;">Cuidador Principal</span>
                     </div>
-                    <div class="user-avatar" style="width: 48px; height: 48px; background: var(--primary-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 800; font-size: 1.1rem; border: 2px solid white; box-shadow: var(--shadow-sm);">
-                        LM
+                    <div class="user-avatar" style="width: 42px; height: 42px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 800; font-size: 1rem; border: 2px solid white; box-shadow: var(--shadow-sm);">
+                        CP
                     </div>
                 </div>
             </header>
 
             <main class="content-body animate-up">
                 <header style="margin-bottom: 3rem;">
-                    <h1 style="font-size: 2.25rem;">Visão Geral do Dia</h1>
-                    <p>Acompanhe o status de medicação e adesão de todos os seus pacientes.</p>
+                    <h1 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em;">Visão Geral do Dia</h1>
+                    <p style="font-size: 1.1rem; color: var(--text-sub);">Acompanhe o status de medicação e adesão de todos os seus pacientes.</p>
                 </header>
 
                 <div class="dashboard-grid">
@@ -120,19 +123,6 @@
                         <span class="stat-value" id="statMissed" style="color: #ef4444;">0</span>
                     </div>
                 </div>
-
-                <!-- Patients List Header -->
-                <div class="card-title" style="margin-top: 4rem; padding: 0 0.5rem;">
-                    <h3 style="font-size: 1.75rem;">Monitoramento de Pacientes</h3>
-                    <a href="pacientes.html" class="btn btn-primary">
-                        <i data-lucide="plus-circle"></i>
-                        Novo Paciente
-                    </a>
-                </div>
-                
-                <div id="patientListContainer" class="dashboard-grid" style="margin-top: 2rem;">
-                    <!-- Populated by JS -->
-                </div>
             </main>
         </div>
     </div>
@@ -177,8 +167,7 @@
 
     <div id="notificationContainer" class="notification-container"></div>
     <script src="../db.js"></script>
-    <script src="../js/script.js"></script>
-    <script src="../js/MedicineService.js"></script>
+    <script src="../js/DataService.js"></script>
     <script src="../controller.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

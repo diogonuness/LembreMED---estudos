@@ -4,7 +4,7 @@
  */
 
 const dbName = "LembreMedDB";
-const dbVersion = 1;
+const dbVersion = 2;
 let db;
 
 /**
@@ -16,14 +16,22 @@ function iniciarBanco() {
         const request = indexedDB.open(dbName, dbVersion);
 
         request.onupgradeneeded = (event) => {
-            const db = event.target.result;
+            const dbInstance = event.target.result;
             // Criar Tabela de Pacientes
-            if (!db.objectStoreNames.contains("pacientes")) {
-                db.createObjectStore("pacientes", { keyPath: "id", autoIncrement: true });
+            if (!dbInstance.objectStoreNames.contains("pacientes")) {
+                dbInstance.createObjectStore("pacientes", { keyPath: "id", autoIncrement: true });
             }
             // Criar Tabela de Medicamentos
-            if (!db.objectStoreNames.contains("medicamentos")) {
-                db.createObjectStore("medicamentos", { keyPath: "id", autoIncrement: true });
+            if (!dbInstance.objectStoreNames.contains("medicamentos")) {
+                dbInstance.createObjectStore("medicamentos", { keyPath: "id", autoIncrement: true });
+            }
+            // Criar Tabela de Histórico
+            if (!dbInstance.objectStoreNames.contains("historico")) {
+                dbInstance.createObjectStore("historico", { keyPath: "id", autoIncrement: true });
+            }
+            // Criar Tabela de Doenças
+            if (!dbInstance.objectStoreNames.contains("doencas")) {
+                dbInstance.createObjectStore("doencas", { keyPath: "id", autoIncrement: true });
             }
         };
 
@@ -31,6 +39,7 @@ function iniciarBanco() {
             db = event.target.result;
             resolve(db);
         };
+
 
         request.onerror = (event) => {
             console.error("Erro ao abrir IndexedDB:", event.target.error);

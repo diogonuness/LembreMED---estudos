@@ -18,37 +18,37 @@
             <div class="sidebar-header">
                 <a href="paciente-view.html" class="sidebar-logo">
                     <div class="sidebar-logo-icon">
-                        <i data-lucide="pill"></i>
+                        <i data-lucide="heart-pulse"></i>
                     </div>
                     <span>LembreMED</span>
                 </a>
             </div>
             
             <nav class="sidebar-nav">
-                <button class="sidebar-item sub-nav-btn active" onclick="showSection('inicio', this)">
+                <button class="sidebar-item sub-nav-btn active" onclick="showSection('inicio', this)" aria-label="Ir para o início">
                     <i data-lucide="layout-dashboard"></i>
                     <span>Início</span>
                 </button>
-                <button class="sidebar-item sub-nav-btn" onclick="showSection('medicamentos', this)">
-                    <i data-lucide="calendar-check"></i>
+                <button class="sidebar-item sub-nav-btn" onclick="showSection('medicamentos', this)" aria-label="Ver meus remédios">
+                    <i data-lucide="pill"></i>
                     <span>Meus Remédios</span>
                 </button>
-                <button class="sidebar-item sub-nav-btn" onclick="showSection('doencas', this)">
+                <button class="sidebar-item sub-nav-btn" onclick="showSection('doencas', this)" aria-label="Ver minhas condições">
                     <i data-lucide="activity"></i>
                     <span>Doenças</span>
                 </button>
-                <button class="sidebar-item sub-nav-btn" onclick="showSection('historico', this)">
-                    <i data-lucide="history"></i>
+                <button class="sidebar-item sub-nav-btn" onclick="showSection('historico', this)" aria-label="Ver histórico">
+                    <i data-lucide="calendar"></i>
                     <span>Histórico</span>
                 </button>
-                <button class="sidebar-item sub-nav-btn" onclick="showSection('configuracoes', this)">
+                <button class="sidebar-item sub-nav-btn" onclick="showSection('configuracoes', this)" aria-label="Abrir configurações">
                     <i data-lucide="settings"></i>
                     <span>Configurações</span>
                 </button>
             </nav>
 
             <div class="sidebar-footer">
-                <button onclick="logout()" class="sidebar-item" style="background: transparent;">
+                <button onclick="logout()" class="sidebar-item" style="color: var(--text-danger);" aria-label="Sair do sistema">
                     <i data-lucide="log-out"></i>
                     <span>Sair</span>
                 </button>
@@ -57,13 +57,13 @@
 
         <div class="main-content">
             <header class="top-bar">
-                <button class="mobile-toggle" onclick="toggleSidebar()">
+                <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Abrir menu">
                     <i data-lucide="menu"></i>
                 </button>
                 <div class="user-info">
                     <div style="text-align: right;">
-                        <span id="userNameDisplay" style="display: block; font-weight: 700;">Olá, Paciente</span>
-                        <span style="font-size: 0.75rem; color: var(--text-sub); font-weight: 600;">Modo Paciente</span>
+                        <span id="userNameDisplay" style="display: block; font-weight: 700; color: var(--text-main);">Olá, Paciente</span>
+                        <span style="font-size: 0.8rem; color: var(--text-sub); font-weight: 600;">Modo Paciente</span>
                     </div>
                 </div>
             </header>
@@ -71,21 +71,31 @@
             <main class="content-body animate-up">
                 <!-- Seção: Início -->
                 <section id="section-inicio" class="section-content active">
-                    <header style="margin-bottom: 2rem;">
-                        <h1 style="font-size: 2.25rem;">Minha Saúde Hoje</h1>
-                        <p>Acompanhe suas doses e mantenha o foco.</p>
+                    <header style="margin-bottom: 3rem;">
+                        <h1 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em;">Minha Saúde Hoje</h1>
+                        <p style="font-size: 1.1rem; color: var(--text-sub);">Acompanhe suas doses diárias e mantenha o foco na sua rotina.</p>
+                        
+                        <div class="status-badge">
+                            <i data-lucide="check-circle-2"></i>
+                            <span>Tudo em dia por enquanto</span>
+                        </div>
                     </header>
 
                     <div class="dashboard-grid">
                         <div class="card chart-container">
-                            <h3>Minha Adesão</h3>
+                            <div class="card-title" style="width: 100%; justify-content: center;">
+                                <h3>Minha Adesão</h3>
+                            </div>
                             <svg viewBox="0 0 36 36" class="circular-chart">
                                 <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 <path id="patientAdherenceCircle" class="circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 <text x="18" y="20.35" class="percentage" id="patientAdherenceText">0%</text>
                             </svg>
+                            <p style="margin-top: 1rem; font-weight: 600; color: var(--text-sub);">Progresso das metas</p>
                         </div>
-                        <div id="nextDoseContainer" style="display: grid; gap: 1rem;"></div>
+                        <div id="nextDoseContainer" style="display: grid; gap: 1rem;">
+                            <!-- Populated by JS -->
+                        </div>
                     </div>
                 </section>
 
@@ -94,8 +104,8 @@
                     <div class="card">
                         <div class="card-title">
                             <h3>Meus Medicamentos</h3>
-                            <button class="btn btn-primary" onclick="document.querySelector('#medPatientModal h2').innerText = 'Novo Medicamento'; openModal('medPatientModal')">
-                                <i data-lucide="plus-circle"></i> Novo Medicamento
+                            <button class="btn btn-primary" onclick="document.querySelector('#medPatientModal h2').innerText = 'Adicionar Medicamento'; document.getElementById('medId').value=''; document.getElementById('medFormPatient').reset(); openModal('medPatientModal')">
+                                <i data-lucide="plus-circle"></i> Adicionar Medicamento
                             </button>
                         </div>
                         <div id="medListContainer"></div>
@@ -107,8 +117,8 @@
                     <div class="card">
                         <div class="card-title">
                             <h3>Minhas Condições</h3>
-                            <button class="btn btn-primary" onclick="document.querySelector('#diseaseModal h2').innerText = 'Adicionar Condição'; openModal('diseaseModal')">
-                                <i data-lucide="plus-circle"></i> Adicionar
+                            <button class="btn btn-primary" onclick="document.querySelector('#diseaseModal h2').innerText = 'Adicionar Doença'; document.getElementById('diseaseId').value=''; document.getElementById('diseaseForm').reset(); openModal('diseaseModal')">
+                                <i data-lucide="plus-circle"></i> Adicionar Doença
                             </button>
                         </div>
                         <div id="diseaseListContainer"></div>
@@ -249,16 +259,46 @@
         </div>
     </div>
 
-    <div id="notificationContainer"></div>
+    <div id="notificationContainer" class="notification-container"></div>
 
     <script src="../db.js"></script>
-    <script src="../js/script.js"></script>
+    <script src="../js/DataService.js"></script>
     <script src="../controller.js"></script>
     <script>
+        // Global Helper Functions
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function showConfirm(title, message, onConfirm) {
+            document.getElementById('confirmTitle').innerText = title;
+            document.getElementById('confirmMessage').innerText = message;
+            const btn = document.getElementById('btnConfirmAction');
+            btn.onclick = () => {
+                onConfirm();
+                closeModal('confirmModal');
+            };
+            openModal('confirmModal');
+        }
+
+        function showSection(sectionId, btn) {
+            document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-' + sectionId).classList.add('active');
+            document.querySelectorAll('.sub-nav-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth <= 1024) sidebar.classList.remove('open');
+        }
+
         function updateFontSize(size) {
             localStorage.setItem('lembremed_font_size', size);
-            applyGlobalSettings();
-            showNotification('Fonte Atualizada', 'O tamanho da letra foi alterado.', '🔤');
+            app.applySettings();
+            app.showToast('Fonte Atualizada', 'O tamanho da letra foi alterado.', '🔤');
         }
 
         function saveSettings() {
@@ -266,9 +306,7 @@
             user.nome = document.getElementById('configName').value;
             user.email = document.getElementById('configEmail').value;
             localStorage.setItem('lembremed_user', JSON.stringify(user));
-            
-            showSuccessModal("Ajustes Salvos", "Suas preferências foram atualizadas com sucesso.");
-            setTimeout(() => window.location.reload(), 2000);
+            app.showToast("Ajustes Salvos", "Suas preferências foram atualizadas com sucesso.", "✅");
         }
 
         async function renderDiseases() {
@@ -305,12 +343,70 @@
                 diseases.splice(index, 1);
                 localStorage.setItem('lembremed_diseases', JSON.stringify(diseases));
                 renderDiseases();
+                app.showToast("Removido", "Doença excluída com sucesso.", "🗑️");
             });
         }
 
+        function editDisease(index) {
+            const diseases = JSON.parse(localStorage.getItem('lembremed_diseases') || '[]');
+            const disease = diseases[index];
+            document.getElementById('diseaseId').value = index;
+            document.getElementById('diseaseName').value = disease.nome;
+            document.getElementById('diseaseNote').value = disease.nota;
+            document.querySelector('#diseaseModal h2').innerText = 'Editar Doença';
+            openModal('diseaseModal');
+        }
+
+        async function renderMedicamentos() {
+            const container = document.getElementById('medListContainer');
+            if (!container) return;
+            const meds = await app.service.listarMedicamentos();
+            
+            if (meds.length === 0) {
+                container.innerHTML = '<p class="empty-state">Nenhum medicamento cadastrado.</p>';
+                return;
+            }
+            container.innerHTML = meds.map(med => `
+                <div class="card-item animate-fade">
+                    <div class="card-item-info">
+                        <h4>${med.nome}</h4>
+                        <p>${med.dose} • <strong>${med.horario}</strong></p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-outline" style="padding: 0.5rem;" onclick="app.abrirEdicao(${med.id})">
+                            <i data-lucide="edit-3"></i>
+                        </button>
+                        <button class="btn-remove" style="padding: 0.5rem;" onclick="app.excluirMed(${med.id})">
+                            <i data-lucide="trash-2"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        document.getElementById('diseaseForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('diseaseId').value;
+            const nome = document.getElementById('diseaseName').value;
+            const nota = document.getElementById('diseaseNote').value;
+            const diseases = JSON.parse(localStorage.getItem('lembremed_diseases') || '[]');
+            
+            if (id !== '') {
+                diseases[id] = { nome, nota };
+            } else {
+                diseases.push({ nome, nota });
+            }
+            localStorage.setItem('lembremed_diseases', JSON.stringify(diseases));
+            closeModal('diseaseModal');
+            renderDiseases();
+            app.showToast("Salvo", id ? "Doença atualizada com sucesso!" : "Doença criada com sucesso!", "✅");
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             renderDiseases();
+            renderMedicamentos();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         });
     </script>
-</body>
-</html>
+

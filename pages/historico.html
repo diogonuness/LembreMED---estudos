@@ -16,7 +16,7 @@
             <div class="sidebar-header">
                 <a href="inicio.html" class="sidebar-logo">
                     <div class="sidebar-logo-icon">
-                        <i data-lucide="pill"></i>
+                        <i data-lucide="heart-pulse"></i>
                     </div>
                     <span>LembreMED</span>
                 </a>
@@ -46,7 +46,7 @@
             </nav>
 
             <div class="sidebar-footer">
-                <button onclick="logout()" class="btn btn-outline" style="width: 100%; justify-content: flex-start; border: none; padding: 1rem 1.5rem; background: transparent;">
+                <button onclick="logout()" class="sidebar-item" style="color: var(--text-danger);">
                     <i data-lucide="log-out"></i>
                     <span>Sair</span>
                 </button>
@@ -61,35 +61,32 @@
                 </button>
                 <div class="user-info" style="display: flex; align-items: center; gap: 1rem;">
                     <div style="text-align: right;">
-                        <span id="userNameDisplay" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-main);">Carregando...</span>
-                        <span style="font-size: 0.75rem; color: var(--text-sub); font-weight: 600;">Cuidador Principal</span>
+                        <span id="userNameDisplay" style="display: block; font-weight: 700; color: var(--text-main);">Carregando...</span>
+                        <span style="font-size: 0.8rem; color: var(--text-sub); font-weight: 600;">Cuidador Principal</span>
                     </div>
-                    <div class="user-avatar" style="width: 48px; height: 48px; background: var(--primary-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 800; font-size: 1.1rem; border: 2px solid white; box-shadow: var(--shadow-sm);">
-                        LM
+                    <div class="user-avatar" style="width: 42px; height: 42px; background: var(--primary-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 800; font-size: 1rem; border: 2px solid white; box-shadow: var(--shadow-sm);">
+                        CP
                     </div>
                 </div>
             </header>
 
             <main class="content-body animate-up">
                 <header style="margin-bottom: 3rem;">
-                    <h1 style="font-size: 2.25rem;">Histórico de Atividades</h1>
-                    <p>Acompanhe o registro completo de todas as medicações administradas.</p>
+                    <h1 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em;">Histórico de Atividades</h1>
+                    <p style="font-size: 1.1rem; color: var(--text-sub);">Acompanhe o registro completo de todas as medicações administradas.</p>
                 </header>
 
                 <div class="card">
                     <div class="card-title"><h3>Registro de Doses</h3></div>
-                    <div id="historyListContainer" class="history-list"></div>
+                    <div id="patientHistoryContainer" class="history-list"></div>
                 </div>
             </main>
         </div>
     </div>
 
     <div id="notificationContainer" class="notification-container"></div>
-    <script src="../js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        });
-    </script>
+    <script src="../db.js"></script>
+    <script src="../js/DataService.js"></script>
+    <script src="../controller.js"></script>
 </body>
 </html>
