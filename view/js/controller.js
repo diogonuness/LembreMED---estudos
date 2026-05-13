@@ -32,8 +32,8 @@ class AppController {
 
         if (!logged || !user) {
             if (!isAuthPage) {
-                const prefix = window.location.pathname.includes('/pages/') ? '../' : '';
-                window.location.href = prefix + (window.location.pathname.includes('/pages/') ? 'login.html' : 'pages/login.html');
+                const prefix = window.location.pathname.includes('/pages/') ? '' : 'pages/';
+                window.location.href = prefix + 'login.html';
             }
             return;
         }
@@ -44,8 +44,8 @@ class AppController {
 
     logout() {
         localStorage.removeItem('lembremed_logged');
-        const prefix = window.location.pathname.includes('/pages/') ? '../' : '';
-        window.location.href = prefix + (window.location.pathname.includes('/pages/') ? 'login.html' : 'pages/login.html');
+        const prefix = window.location.pathname.includes('/pages/') ? '' : 'pages/';
+        window.location.href = prefix + 'login.html';
     }
 
     toggleSidebar() {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pacientes - LembreMED</title>
+    <title>Medicamentos - LembreMED</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,8 +20,8 @@
             </div>
             <nav class="sidebar-nav">
                 <a href="inicio.html" class="sidebar-item"><i data-lucide="layout-dashboard"></i><span>Início</span></a>
-                <a href="medicamentos.html" class="sidebar-item"><i data-lucide="pill"></i><span>Medicamentos</span></a>
-                <a href="pacientes.html" class="sidebar-item active"><i data-lucide="users"></i><span>Pacientes</span></a>
+                <a href="medicamentos.html" class="sidebar-item active"><i data-lucide="pill"></i><span>Medicamentos</span></a>
+                <a href="pacientes.html" class="sidebar-item"><i data-lucide="users"></i><span>Pacientes</span></a>
                 <a href="historico.html" class="sidebar-item"><i data-lucide="history"></i><span>Histórico</span></a>
                 <a href="configuracoes.html" class="sidebar-item"><i data-lucide="settings"></i><span>Configurações</span></a>
             </nav>
@@ -43,17 +43,17 @@
             <main class="content-body animate-up">
                 <header style="margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: flex-end;">
                     <div>
-                        <h1>Meus Pacientes</h1>
-                        <p class="subtitle">Gerencie as pessoas que estão sob seus cuidados.</p>
+                        <h1>Medicamentos</h1>
+                        <p class="subtitle">Gerencie todos os remédios e horários dos seus pacientes.</p>
                     </div>
-                    <button class="btn btn-primary" onclick="document.querySelector('#patientCaregiverModal h2').innerText = 'Cadastrar Paciente'; document.getElementById('patientFormCaregiver').reset(); openModal('patientCaregiverModal')">
-                        <i data-lucide="plus-circle"></i> Novo Paciente
+                    <button class="btn btn-primary" onclick="document.querySelector('#medCaregiverModal h2').innerText = 'Cadastrar Medicamento'; document.getElementById('medIdCaregiver').value=''; document.getElementById('medFormCaregiver').reset(); openModal('medCaregiverModal')">
+                        <i data-lucide="plus-circle"></i> Novo Medicamento
                     </button>
                 </header>
 
                 <div class="card">
-                    <div class="card-title"><h3>Listagem de Pacientes</h3></div>
-                    <div id="patientListContainer" class="med-list">
+                    <div class="card-title"><h3>Listagem de Medicamentos</h3></div>
+                    <div id="listaMedicamentosDB" class="med-list">
                         <!-- Populated by JS -->
                     </div>
                 </div>
@@ -61,31 +61,43 @@
         </div>
     </div>
 
-    <!-- Modal: Cadastro de Paciente -->
-    <div id="patientCaregiverModal" class="modal-overlay">
+    <!-- Modal: Cadastro de Medicamento -->
+    <div id="medCaregiverModal" class="modal-overlay">
         <div class="modal" style="max-width: 600px;">
-            <button class="close-modal" onclick="closeModal('patientCaregiverModal')">&times;</button>
-            <div class="modal-header"><h2>Cadastrar Paciente</h2></div>
-            <form id="patientFormCaregiver" style="margin-top: 2rem;">
+            <button class="close-modal" onclick="closeModal('medCaregiverModal')">&times;</button>
+            <div class="modal-header"><h2>Cadastrar Medicamento</h2></div>
+            <form id="medFormCaregiver" style="margin-top: 2rem;">
+                <input type="hidden" id="medIdCaregiver">
                 <div class="form-group">
-                    <label for="pName">Nome Completo</label>
-                    <input type="text" id="pName" class="form-control" required>
+                    <label for="mPatient">Vincular ao Paciente</label>
+                    <select id="mPatient" class="form-control" required></select>
                 </div>
                 <div class="grid-opcoes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
-                        <label for="pAge">Idade</label>
-                        <input type="number" id="pAge" class="form-control" required>
+                        <label for="mName">Nome do Remédio</label>
+                        <input type="text" id="mName" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="pContact">Telefone/Contato</label>
-                        <input type="text" id="pContact" class="form-control" placeholder="(00) 00000-0000" required>
+                        <label for="mDose">Dose</label>
+                        <input type="text" id="mDose" class="form-control" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="pCondition">Condição Médica Principal</label>
-                    <input type="text" id="pCondition" class="form-control" placeholder="Ex: Hipertensão, Diabetes" required>
+                <div class="grid-opcoes" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="mTime">Horário</label>
+                        <input type="time" id="mTime" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mFreq">Frequência</label>
+                        <select id="mFreq" class="form-control" required>
+                            <option value="Diário">Diário</option>
+                            <option value="2x ao dia (12/12h)">2x ao dia (12/12h)</option>
+                            <option value="3x ao dia (8/8h)">3x ao dia (8/8h)</option>
+                            <option value="4x ao dia (6/6h)">4x ao dia (6/6h)</option>
+                        </select>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Salvar Paciente</button>
+                <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Salvar Medicamento</button>
             </form>
         </div>
     </div>
@@ -102,9 +114,9 @@
     </div>
 
     <div id="notificationContainer" class="notification-container"></div>
-    <script src="../db.js"></script>
+    <script src="../js/db.js"></script>
     <script src="../js/DataService.js"></script>
-    <script src="../controller.js"></script>
+    <script src="../js/controller.js"></script>
     <script>
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
