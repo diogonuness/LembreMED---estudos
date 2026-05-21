@@ -1,11 +1,11 @@
 <?php
-/**
- * LembreMED - Front Controller
- */
 
-require_once 'config.php';
-require_once 'autoload.php';
+declare(strict_types=1);
 
-// Inicia o roteamento
-$router = new Router();
-$router->route();
+use LembreMed\Core\Router;
+
+$config = require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/autoload.php';
+
+$router = new Router($config);
+$router->dispatch();

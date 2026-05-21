@@ -1,24 +1,19 @@
 <?php
-/**
- * LembreMED - Autoload de Classes
- */
 
-spl_autoload_register(function ($class) {
-    // Mapeamento simples: Nome da classe deve ser igual ao nome do arquivo
-    // Procuramos em todas as subpastas de app/
-    $directories = [
-        APP_PATH . '/controller/',
-        APP_PATH . '/model/',
-        APP_PATH . '/middleware/',
-        APP_PATH . '/services/',
-        APP_PATH . '/router/',
-    ];
+declare(strict_types=1);
 
-    foreach ($directories as $directory) {
-        $file = $directory . $class . '.php';
-        if (file_exists($file)) {
-            require_once $file;
-            return;
-        }
+spl_autoload_register(function (string $class): void {
+    $prefix = 'LembreMed\\';
+    $baseDir = APP_PATH . '/';
+
+    if (strncmp($prefix, $class, strlen($prefix)) !== 0) {
+        return;
+    }
+
+    $relativeClass = substr($class, strlen($prefix));
+    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+
+    if (is_file($file)) {
+        require_once $file;
     }
 });

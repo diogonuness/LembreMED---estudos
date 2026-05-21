@@ -78,7 +78,7 @@ class AppController {
     async checkMedicationTimes() {
         const meds = await this.service.listarMedicamentos();
         const history = await this.service.listarHistorico();
-        const today = new Date().toLocaleDateString('pt-BR');
+        const today = this.service._getToday();
         const now = new Date();
         const currentTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 

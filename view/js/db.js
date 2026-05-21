@@ -1,120 +1,54 @@
 /**
- * db.js - Mini framework para IndexedDB usando Promises e async/await.
- * Este arquivo fornece funções globais para interagir com o banco de dados.
+ * Camada de infraestrutura do front-end.
+ * O navegador não acessa SQL: ele conversa com a API PHP, que persiste em SQLite.
  */
 
-const dbName = "LembreMedDB";
-const dbVersion = 2;
-let db;
+const dbName = "LembreMedSQLiteAPI";
+const apiBaseUrl = "/api";
 
-/**
- * Inicia o banco de dados IndexedDB.
- * @returns {Promise<IDBDatabase>} Uma Promise que resolve com a instância do banco de dados.
- */
-function iniciarBanco() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(dbName, dbVersion);
-
-        request.onupgradeneeded = (event) => {
-            const dbInstance = event.target.result;
-            // Criar Tabela de Pacientes
-            if (!dbInstance.objectStoreNames.contains("pacientes")) {
-                dbInstance.createObjectStore("pacientes", { keyPath: "id", autoIncrement: true });
-            }
-            // Criar Tabela de Medicamentos
-            if (!dbInstance.objectStoreNames.contains("medicamentos")) {
-                dbInstance.createObjectStore("medicamentos", { keyPath: "id", autoIncrement: true });
-            }
-            // Criar Tabela de Histórico
-            if (!dbInstance.objectStoreNames.contains("historico")) {
-                dbInstance.createObjectStore("historico", { keyPath: "id", autoIncrement: true });
-            }
-            // Criar Tabela de Doenças
-            if (!dbInstance.objectStoreNames.contains("doencas")) {
-                dbInstance.createObjectStore("doencas", { keyPath: "id", autoIncrement: true });
-            }
-        };
-
-        request.onsuccess = (event) => {
-            db = event.target.result;
-            resolve(db);
-        };
-
-
-        request.onerror = (event) => {
-            console.error("Erro ao abrir IndexedDB:", event.target.error);
-            reject(event.target.error);
-        };
-    });
+async function iniciarBanco() {
+    return true;
 }
 
-/**
- * Adiciona um item a uma tabela específica.
- * @param {string} tabela Nome da store (ex: 'medicamentos').
- * @param {object} item Objeto a ser salvo.
- * @returns {Promise<number>} ID do item inserido.
- */
+function usuarioAtual() {
+    const user = JSON.parse(localStorage.getItem("lembremed_user") || "null");
+    return user?.email || "anonimo";
+}
+
+async function apiRequest(tabela, options = {}) {
+    const response = await fetch(`${apiBaseUrl}/${tabela}${options.id ? `/${options.id}` : ""}`, {
+        method: options.method || "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-LembreMED-User": usuarioAtual()
+        },
+        body: options.body ? JSON.stringify(options.body) : undefined
+    });
+
+    const payload = await response.json();
+    if (!response.ok) {
+        throw new Error(payload.error || "Erro ao acessar a API.");
+    }
+
+    return payload.data;
+}
+
 async function adicionarItem(tabela, item) {
-    if (!db) await iniciarBanco();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([tabela], "readwrite");
-        const store = transaction.objectStore(tabela);
-        const request = store.add(item);
-
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
+    const created = await apiRequest(tabela, { method: "POST", body: item });
+    return created.id;
 }
 
-/**
- * Busca todos os itens de uma tabela.
- * @param {string} tabela Nome da store.
- * @returns {Promise<Array>} Lista de objetos encontrados.
- */
 async function buscarItens(tabela) {
-    if (!db) await iniciarBanco();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([tabela], "readonly");
-        const store = transaction.objectStore(tabela);
-        const request = store.getAll();
-
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
+    return await apiRequest(tabela);
 }
 
-/**
- * Deleta um item de uma tabela pelo seu ID.
- * @param {string} tabela Nome da store.
- * @param {number} id ID do item a ser removido.
- * @returns {Promise<boolean>} Sucesso da operação.
- */
 async function deletarItem(tabela, id) {
-    if (!db) await iniciarBanco();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([tabela], "readwrite");
-        const store = transaction.objectStore(tabela);
-        const request = store.delete(id);
-
-        request.onsuccess = () => resolve(true);
-        request.onerror = () => reject(request.error);
-    });
+    const result = await apiRequest(tabela, { method: "DELETE", id });
+    return !!result.deleted;
 }
 
-/**
- * Atualiza um item em uma tabela (ou adiciona se não existir).
- * @param {string} tabela Nome da store.
- * @param {object} item Objeto com ID para atualizar.
- * @returns {Promise<boolean>} Sucesso da operação.
- */
 async function atualizarItem(tabela, item) {
-    if (!db) await iniciarBanco();
-    return new Promise((resolve, reject) => {
-        const transaction = db.transaction([tabela], "readwrite");
-        const store = transaction.objectStore(tabela);
-        const request = store.put(item);
-
-        request.onsuccess = () => resolve(true);
-        request.onerror = () => reject(request.error);
-    });
+    const { id, ...body } = item;
+    await apiRequest(tabela, { method: "PUT", id, body });
+    return true;
 }
